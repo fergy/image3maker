@@ -1,5 +1,6 @@
 /*
  * Copyright 2013, winocm. <winocm@icloud.com>
+ * Copyright 2020, Fergy. <ramon.rebersak@gmail.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -43,16 +44,19 @@
 #include <sys/errno.h>
 
 typedef enum {
-    IMAGE3_SEPO_S5L8920 = 4,
-    IMAGE3_SEPO_S5L8922 = 2,
+    IMAGE3_SEPO_S5L8920 = 0,
+    IMAGE3_SEPO_S5L8922 = 1,
     IMAGE3_SEPO_S5L8930 = 2,
-    IMAGE3_SEPO_S5L8940 = 17,
-    IMAGE3_SEPO_S5L8942 = 16,
-    IMAGE3_SEPO_S5L8945 = 16,
-    IMAGE3_SEPO_S5L8947 = 16,
-    IMAGE3_SEPO_S5L8950 = 16,
-    IMAGE3_SEPO_S5L8955 = 16,
-    IMAGE3_SEPO_S5L8747 = 16
+    IMAGE3_SEPO_S5L8940 = 3,
+    IMAGE3_SEPO_S5L8942 = 4,
+    IMAGE3_SEPO_S5L8945 = 5,
+    IMAGE3_SEPO_S5L8947 = 6,
+    IMAGE3_SEPO_S5L8950 = 7,
+    IMAGE3_SEPO_S5L8955 = 8,
+    IMAGE3_SEPO_S5L8747 = 9,
+	IMAGE3_SEPO_S7002 = 10,
+	IMAGE3_SEPO_T8002 = 11,
+	IMAGE3_SEPO_T8004 = 12
 } Image3SecurityEpoch;
 
 typedef enum {
@@ -205,6 +209,7 @@ static void print_usage(void)
            "                                      Valid epochs are: s5l8920x, s5l8922x, s5l8930x\n"
            "                                                        s5l8940x, s5l8942x, s5l8947x\n"
            "                                                        s5l8950x, s5l8955x, s5l8747x\n"
+		   "														s7002, t8002, t8004\n"
            "  -v, --imageVersion [version]        Set version string\n"
            "  -d, --imageDomain [securityDomain]  Set specified security domain (manufacturer/Darwin)\n"
            "  -p, --imageProduction [prodValue]   Mark image production value (production/development)\n"
@@ -506,6 +511,13 @@ static void create_image_preprocess(void)
             image3core.imageSecurityEpoch = IMAGE3_SEPO_S5L8942;
         else if(!strcasecmp(imageSecurityEpoch, "s5l8747x"))
             image3core.imageSecurityEpoch = IMAGE3_SEPO_S5L8747;
+		/* iWatches */
+		else if(!strcasecmp(imageSecurityEpoch, "s7002"))
+            image3core.imageSecurityEpoch = IMAGE3_SEPO_S7002;
+		else if(!strcasecmp(imageSecurityEpoch, "t8002"))
+            image3core.imageSecurityEpoch = IMAGE3_SEPO_T8002;
+		else if(!strcasecmp(imageSecurityEpoch, "t8004"))
+            image3core.imageSecurityEpoch = IMAGE3_SEPO_T8004;
         else {
             printf("invalid security epoch '%s'\n", imageSecurityEpoch);
             exit(-1);
